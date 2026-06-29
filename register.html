@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inscription - TaskFlow</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header><div class="logo">⚡ TaskFlow</div><nav><a href="index.html">Connexion</a></nav></header>
+  <div class="container">
+    <div class="auth-layout">
+      <div class="form-card">
+        <h1>Créer un compte</h1>
+        <form id="register-form">
+          <input id="name" type="text" placeholder="Nom complet" required>
+          <input id="email" type="email" placeholder="Email" required>
+          <input id="password" type="password" placeholder="Mot de passe" required>
+          <p id="error"></p>
+          <button type="submit">S'inscrire</button>
+        </form>
+        <p style="text-align:center;margin-top:1rem;">Déjà inscrit ? <a href="index.html">Connectez-vous</a></p>
+      </div>
+      <div class="auth-image">
+        <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80" alt="Illustration">
+      </div>
+    </div>
+  </div>
+  <footer>© 2025 TaskFlow — Simplifiez votre gestion de projets</footer>
+
+  <script src="register.js"></script>
+</body>
+</html>

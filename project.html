@@ -1,0 +1,46 @@
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projet - TaskFlow</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">⚡ TaskFlow</div>
+    <nav>
+      <a href="dashboard.html">Tableau de bord</a>
+      <a href="index.html">Déconnexion</a>
+    </nav>
+  </header>
+
+  <div class="dashboard">
+    <h2 id="title"></h2>
+    <p id="description" style="margin-bottom:1.5rem;"></p>
+
+    <div class="task-form">
+      <h3 style="margin-bottom:1rem;" id="task-form-title">Ajouter une tâche</h3>
+      <form id="task-form">
+        <input id="task-title" type="text" placeholder="Titre de la tâche" required>
+        <textarea id="task-description" rows="3" placeholder="Description de la tâche"></textarea>
+        <select id="task-status">
+          <option value="à faire">À faire</option>
+          <option value="en cours">En cours</option>
+          <option value="terminée">Terminée</option>
+        </select>
+        <button type="submit" id="task-form-button">Ajouter la tâche</button>
+      </form>
+    </div>
+
+    <div class="task-list">
+    </div>
+  </div>
+
+  <footer>© 2025 TaskFlow — Tous droits réservés</footer>
+  <script src="auth.js"></script>
+  <script src="project.js"></script>
+</body>
+</html>
