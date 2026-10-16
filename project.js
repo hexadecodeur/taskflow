@@ -19,22 +19,18 @@ function getData() {
         window.location.href = 'dashboard.html'
     }
 
-    fetch('http://localhost:3000/projects/' + id, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    })
+    secureFetch('http://localhost:3000/projects/' + id)
     .then(data => data.json())
     .then(project => {
         title.textContent = project.title;
         description.textContent = project.description;
     })
+    .catch(err => {
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
+    });
 
-    fetch('http://localhost:3000/tasks?projectId=' + id, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
-    })
+    secureFetch('http://localhost:3000/tasks?projectId=' + id)
     .then(data => data.json())
     .then(tasks => {
         console.log(tasks);
@@ -76,6 +72,16 @@ function getData() {
             deleteButton.classList.add('delete');
             deleteButton.textContent = 'Supprimer';
 
+            deleteButton.addEventListener('click', function() {
+                const confirmDelete = confirm('Voulez-vous vraiment supprimer la tâche ' + task.title + ' ?');
+
+                if(confirmDelete) {
+                    secureFetch('http://localhost:3000/tasks/' + task.id, 'DELETE').then(data => {
+                        getData();
+                    });
+                }
+            });
+
             taskActions.appendChild(editButton);
             taskActions.appendChild(deleteButton);
 
@@ -85,31 +91,27 @@ function getData() {
 
             taskList.appendChild(taskItem);
         });
+    })
+    .catch(err => {
+        localStorage.removeItem('token');
+        window.location.href = 'index.html';
     });
 }
 
 
 function createTask() {
     const form = document.getElementById('task-form');
-    // const titleTask = document.getElementById('task-title');
-    // const descriptionTask = document.getElementById('task-description');
-    // const statusTask = document.getElementById('task-status');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         console.log(editTaskId);
-        fetch('http://localhost:3000/tasks' + (editTaskId ? ('/' + editTaskId) : ''), {
-            method: editTaskId ? 'PUT' : 'POST', 
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                title: titleTask.value,
-                description: descriptionTask.value,
-                status: statusTask.value,
-                projectId: id, 
-            })
+        secureFetch('http://localhost:3000/tasks' + (editTaskId ? ('/' + editTaskId) : ''),
+        editTaskId ? 'PUT' : 'POST',
+        {
+            title: titleTask.value,
+            description: descriptionTask.value,
+            status: statusTask.value,
+            projectId: id, 
         }).then(data => data.json())
         .then(task => {
             titleTask.value = '';
@@ -122,9 +124,6 @@ function createTask() {
         });
     });
 }
-
-
-
 
 getData();
 createTask();

@@ -11,16 +11,9 @@ form.addEventListener('submit', function(event) {
         return ;
     }
     
-    fetch('http://localhost:3000/projects', {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer ' + token,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title: nameInput.value,
-            description: descriptionInput.value
-        })
+    secureFetch('http://localhost:3000/projects', 'POST', {
+        title: nameInput.value,
+        description: descriptionInput.value
     })
     .then(data => data.json())
     .then(project => {

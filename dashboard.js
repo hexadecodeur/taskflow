@@ -6,11 +6,7 @@ logout.addEventListener('click', function () {
     window.location.href = 'index.html';
 });
 
-fetch('http://localhost:3000/projects', {
-    headers: {
-        'Authorization': 'Bearer ' + token
-    }
-})
+secureFetch('http://localhost:3000/projects')
 .then(data => data.json())
 .then(projects => {
     console.log(projects);
