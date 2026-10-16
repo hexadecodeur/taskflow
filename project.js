@@ -1,6 +1,14 @@
 const params = new URLSearchParams(window.location.search);
 const id = params.get('id');
 
+const titleTask = document.getElementById('task-title');
+const descriptionTask = document.getElementById('task-description');
+const statusTask = document.getElementById('task-status');
+
+const taskFormTitle = document.getElementById('task-form-title');
+const taskFormButton = document.getElementById('task-form-button');
+
+let editTaskId = null;
 
 function getData() {
     const description = document.getElementById('description');
@@ -55,6 +63,14 @@ function getData() {
             const editButton = document.createElement('button');
             editButton.classList.add('edit');
             editButton.textContent = 'Modifier';
+            editButton.addEventListener('click', function() {
+                taskFormTitle.textContent = 'Modifier la tâche';
+                taskFormButton.textContent = 'Modifier la tâche';
+                titleTask.value = task.title;
+                descriptionTask.value = task.description;
+                statusTask.value = task.status;
+                editTaskId = task.id;
+            });
 
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('delete');
@@ -75,15 +91,15 @@ function getData() {
 
 function createTask() {
     const form = document.getElementById('task-form');
-    const titleTask = document.getElementById('task-title');
-    const descriptionTask = document.getElementById('task-description');
-    const statusTask = document.getElementById('task-status');
+    // const titleTask = document.getElementById('task-title');
+    // const descriptionTask = document.getElementById('task-description');
+    // const statusTask = document.getElementById('task-status');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-
-        fetch('http://localhost:3000/tasks', {
-            method: 'POST',
+        console.log(editTaskId);
+        fetch('http://localhost:3000/tasks' + (editTaskId ? ('/' + editTaskId) : ''), {
+            method: editTaskId ? 'PUT' : 'POST', 
             headers: {
                 'Authorization': 'Bearer ' + token,
                 'Content-Type': 'application/json'
@@ -99,6 +115,9 @@ function createTask() {
             titleTask.value = '';
             descriptionTask.value = '';
             statusTask.value = 'à faire';
+            editTaskId = null;
+            taskFormTitle.textContent = 'Ajouter une tâche';
+            taskFormButton.textContent = 'Ajouter la tâche';
             getData();
         });
     });
