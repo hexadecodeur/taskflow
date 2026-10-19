@@ -6,7 +6,7 @@ const error = document.getElementById('error');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    if(nameInput.value.lenth < 4) {
+    if(nameInput.value.length < 4) {
         error.textContent = 'Nom du projet invalide';
         return ;
     }
